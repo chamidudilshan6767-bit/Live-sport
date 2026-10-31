@@ -1,32 +1,14 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
+// Public folder එක හෝ current folder එක static විදිහට set කිරීම
+app.use(express.static(path.join(__dirname)));
 
-// චැනල් ලැයිස්තුව සහ ස්ට්‍රීම් ලින්ක් ලබා දෙන API endpoint එක
-app.get('/api/channels', (req, res) => {
-    const channels = [
-        {
-            id: 1,
-            name: "Sky Sports Cricket",
-            category: "Cricket",
-            streamUrl: "YOUR_STREAM_URL_HERE"
-        },
-        {
-            id: 2,
-            name: "Peo Sports",
-            category: "Sports",
-            streamUrl: "YOUR_STREAM_URL_HERE"
-        },
-        {
-            id: 3,
-            name: "Willow Cricket",
-            category: "Cricket",
-            streamUrl: "YOUR_STREAM_URL_HERE"
-        }
-    ];
-    res.json(channels);
+// Root route එක මගින් index.html පෙන්වීම
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(PORT, () => {
